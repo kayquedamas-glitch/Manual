@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual Blindagem Digital - Proteção para Idosos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #1a0b2e, #0d0d0d);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 550px;
+      background-color: #0d0d0d;
+      border: 2px solid #8E44FF;
+      border-radius: 25px;
+      box-shadow: 0 0 40px rgba(142, 68, 255, 0.3);
+      padding: 40px 30px;
+      text-align: center;
+      transition: all 0.5s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(142, 68, 255, 0.1) 0%, rgba(142, 68, 255, 0) 70%);
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .shield-icon {
+      font-size: 2.5rem;
+      margin-right: 15px;
+      color: #8E44FF;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      color: #fff;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .subtitle {
+      color: #A86CFF;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    p {
+      color: #e0e0e0;
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .highlight {
+      color: #A86CFF;
+      font-weight: 600;
+    }
+
+    .question {
+      display: none;
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    .question.active {
+      display: block;
+    }
+
+    .buttons-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    button {
+      background: linear-gradient(135deg, #8E44FF, #A86CFF);
+      color: white;
+      border: none;
+      padding: 16px 30px;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: 500;
+      min-width: 140px;
+      box-shadow: 0 4px 15px rgba(142, 68, 255, 0.3);
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #A86CFF, #C594FF);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(142, 68, 255, 0.4);
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    input {
+      width: 90%;
+      padding: 16px;
+      border-radius: 30px;
+      border: 2px solid #8E44FF;
+      font-size: 1.1rem;
+      text-align: center;
+      margin-bottom: 25px;
+      outline: none;
+      background-color: rgba(255, 255, 255, 0.05);
+      color: white;
+      transition: all 0.3s;
+    }
+
+    input:focus {
+      border-color: #A86CFF;
+      box-shadow: 0 0 10px rgba(142, 68, 255, 0.5);
+    }
+
+    input::placeholder {
+      color: #aaa;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background-color: #222;
+      border-radius: 10px;
+      margin: 25px 0;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      background: linear-gradient(90deg, #8E44FF, #A86CFF);
+      border-radius: 10px;
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+
+    .step-indicator {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .step.active {
+      color: #A86CFF;
+      font-weight: 600;
+    }
+
+    .step-circle {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+    }
+
+    .step.active .step-circle {
+      background-color: #8E44FF;
+    }
+
+    .trust-elements {
+      display: flex;
+      justify-content: space-around;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 10px;
+      max-width: 120px;
+    }
+
+    .trust-icon {
+      font-size: 2rem;
+      color: #8E44FF;
+      margin-bottom: 10px;
+    }
+
+    .trust-text {
+      font-size: 0.9rem;
+      color: #ccc;
+      text-align: center;
+    }
+
+    .final-message {
+      background: rgba(142, 68, 255, 0.1);
+      border-radius: 15px;
+      padding: 25px;
+      margin-top: 20px;
+      border: 1px solid rgba(142, 68, 255, 0.3);
+    }
+
+    .whatsapp-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #25D366;
+      color: white;
+      padding: 16px 30px;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-decoration: none;
+      margin-top: 20px;
+      transition: 0.3s;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    }
+
+    .whatsapp-button:hover {
+      background: #20bd5c;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    }
+
+    .whatsapp-icon {
+      margin-right: 10px;
+      font-size: 1.5rem;
+    }
+
+    .loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(142, 68, 255, 0.3);
+      border-top: 5px solid #8E44FF;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 30px 20px;
+      }
+      
+      h1 {
+        font-size: 1.6rem;
+      }
+      
+      p {
+        font-size: 1rem;
+      }
+      
+      button {
+        padding: 14px 25px;
+        font-size: 1rem;
+        min-width: 120px;
+      }
+      
+      .trust-elements {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="content">
+      <div class="header">
+        <div class="shield-icon">🛡️</div>
+        <h1>Manual Blindagem Digital</h1>
+      </div>
+      
+      <p class="subtitle">Proteção para Idosos contra Golpes Online</p>
+      <p>Responda 3 perguntas rápidas e descubra como se proteger dos golpes mais comuns no WhatsApp e PIX.</p>
+
+      <div class="trust-elements">
+        <div class="trust-item">
+          <div class="trust-icon">🔒</div>
+          <div class="trust-text">100% Seguro</div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">👵</div>
+          <div class="trust-text">Fácil de Usar</div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">📱</div>
+          <div class="trust-text">Suporte via WhatsApp</div>
+        </div>
+      </div>
+
+      <div class="step-indicator">
+        <div class="step active" id="step1">
+          <div class="step-circle">1</div>
+          <div>Início</div>
+        </div>
+        <div class="step" id="step2">
+          <div class="step-circle">2</div>
+          <div>Perguntas</div>
+        </div>
+        <div class="step" id="step3">
+          <div class="step-circle">3</div>
+          <div>Conclusão</div>
+        </div>
+      </div>
+
+      <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+      </div>
+
+      <div id="quiz">
+
+        <!-- Pergunta 1 -->
+        <div class="question active" id="q1">
+          <p>1️⃣ Você já recebeu alguma mensagem suspeita pedindo dinheiro pelo WhatsApp?</p>
+          <div class="buttons-container">
+            <button onclick="nextQuestion('q1','q2')">Sim</button>
+            <button onclick="nextQuestion('q1','q2')">Não</button>
+          </div>
+        </div>
+
+        <!-- Pergunta 2 -->
+        <div class="question" id="q2">
+          <p>2️⃣ Você sabe identificar quando alguém tenta se passar por um parente ou amigo?</p>
+          <div class="buttons-container">
+            <button onclick="nextQuestion('q2','q3')">Sim</button>
+            <button onclick="nextQuestion('q2','q3')">Não tenho certeza</button>
+          </div>
+        </div>
+
+        <!-- Pergunta 3 -->
+        <div class="question" id="q3">
+          <p>3️⃣ Digite seu nome para receber o <span class="highlight">Manual Blindagem Digital</span> e aprender como se proteger:</p>
+          <input type="text" id="name" placeholder="Digite seu nome aqui" required>
+          <button onclick="finalStep()">Quero me proteger</button>
+        </div>
+
+        <!-- Mensagem final -->
+        <div class="question" id="final">
+          <div class="loading">
+            <div class="spinner"></div>
+            <h2>✅ Pronto!</h2>
+          </div>
+          <div class="final-message">
+            <p>Estamos te direcionando para o WhatsApp para enviar seu manual com segurança...</p>
+            <p><strong>O que você receberá:</strong></p>
+            <ul style="text-align: left; margin: 15px 0; padding-left: 20px;">
+              <li>Manual completo de proteção digital</li>
+              <li>Dicas para identificar golpes</li>
+              <li>Como configurar a segurança do WhatsApp</li>
+              <li>Orientações sobre PIX seguro</li>
+            </ul>
+            <p>Se o redirecionamento não funcionar automaticamente, clique no botão abaixo:</p>
+            <a href="#" id="whatsapp-link" class="whatsapp-button">
+              <span class="whatsapp-icon">💬</span> Falar no WhatsApp
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentStep = 1;
+    const totalSteps = 3;
+
+    function updateProgress() {
+      const progress = (currentStep / totalSteps) * 100;
+      document.getElementById('progress').style.width = `${progress}%`;
+      
+      // Atualiza indicadores de etapa
+      for (let i = 1; i <= totalSteps; i++) {
+        const step = document.getElementById(`step${i}`);
+        if (i <= currentStep) {
+          step.classList.add('active');
+        } else {
+          step.classList.remove('active');
+        }
+      }
+    }
+
+    function nextQuestion(current, next) {
+      document.getElementById(current).classList.remove('active');
+      document.getElementById(next).classList.add('active');
+      currentStep++;
+      updateProgress();
+    }
+
+    function finalStep() {
+      const name = document.getElementById('name').value.trim();
+      if (name === '') {
+        alert('Por favor, digite seu nome para continuar.');
+        return;
+      }
+
+      // Atualiza para a etapa final
+      currentStep = totalSteps;
+      updateProgress();
+      
+      // Mostra tela de carregamento
+      nextQuestion('q3', 'final');
+
+      // Monta a mensagem para o WhatsApp
+      const msg = encodeURIComponent(`Olá, meu nome é ${name} e quero receber o Manual Blindagem Digital para idosos!`);
+      const numero = '5531982929523'; // seu número
+      const link = `https://wa.me/${numero}?text=${msg}`;
+      
+      // Atualiza o link do botão WhatsApp
+      document.getElementById('whatsapp-link').href = link;
+
+      // Redireciona para o WhatsApp após 3 segundos
+      setTimeout(() => {
+        window.open(link, '_blank');
+      }, 3000);
+    }
+
+    // Inicializa a barra de progresso
+    updateProgress();
+  </script>
+</body>
+</html>
